@@ -1,0 +1,114 @@
+layer {
+  name: "data/data"
+  type: "Data"
+  top: "data"
+  top: "label"
+  transform_param {
+    crop_size: 224  mirror: true
+    mean_value: 104  mean_value: 117  mean_value: 123
+  }
+  data_param {
+    #source: "data/imagenet/train_lmdb"  backend: LMDB  batch_size: 32
+    source: "data/tiny_lmdb"  backend: LMDB  batch_size: 1
+  }
+  include { phase: TRAIN }
+}
+layer {
+  name: "conv1/conv"
+  type: "Convolution"
+  bottom: "data"
+  top: "conv1"
+  convolution_param {
+    num_output: 32
+    kernel_size: 3  pad: 1  stride: 2
+    weight_filler { type: "xavier" }
+  }
+}
+layer {
+  name: "conv1/relu"
+  type: "ReLU"
+  bottom: "conv1"
+  top: "conv1"
+}
+layer {
+  name: "conv2/conv"
+  type: "Convolution"
+  bottom: "conv1"
+  top: "conv2"
+  convolution_param {
+    num_output: 64
+    kernel_size: 3  pad: 1  stride: 2
+    weight_filler { type: "xavier" }
+  }
+}
+layer {
+  name: "conv2/relu"
+  type: "ReLU"
+  bottom: "conv2"
+  top: "conv2"
+}
+layer {
+  name: "conv3/conv"
+  type: "Convolution"
+  bottom: "conv2"
+  top: "conv3"
+  convolution_param {
+    num_output: 128
+    kernel_size: 3  pad: 1  stride: 2
+    weight_filler { type: "xavier" }
+  }
+}
+layer {
+  name: "conv3/relu"
+  type: "ReLU"
+  bottom: "conv3"
+  top: "conv3"
+}
+layer {
+  name: "conv4/conv"
+  type: "Convolution"
+  bottom: "conv3"
+  top: "conv4"
+  convolution_param {
+    num_output: 256
+    kernel_size: 3  pad: 1  stride: 2
+    weight_filler { type: "xavier" }
+  }
+}
+layer {
+  name: "conv4/relu"
+  type: "ReLU"
+  bottom: "conv4"
+  top: "conv4"
+}
+layer {
+  name: "conv5/conv"
+  type: "Convolution"
+  bottom: "conv4"
+  top: "conv5"
+  convolution_param {
+    num_output: 1000
+    kernel_size: 3  pad: 1  stride: 2
+    weight_filler { type: "xavier" }
+  }
+}
+layer {
+  name: "conv5/relu"
+  type: "ReLU"
+  bottom: "conv5"
+  top: "conv5"
+}
+layer {
+  name: "pool6/pool"
+  type: "Pooling"
+  bottom: "conv5"
+  top: "pool6"
+  pooling_param { pool: AVE  global_pooling: true }
+}
+layer{
+  name: "loss"
+  type: "SoftmaxWithLoss"
+  bottom: "pool6"
+  bottom: "label"
+  top: "loss"
+}

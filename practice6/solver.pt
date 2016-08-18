@@ -1,0 +1,12 @@
+net: "caffe-materials/practice6/net.pt"
+base_lr: 0.000001
+lr_policy: "step"
+gamma: 0.9773
+stepsize: 3000
+display: 100
+max_iter: 2000000
+momentum: 0.9
+weight_decay: 0.0002
+snapshot: 20000
+snapshot_prefix: "caffe-materials/practice6/net_train"
+solver_mode: GPU

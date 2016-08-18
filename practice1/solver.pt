@@ -1,0 +1,18 @@
+net: "caffe-materials/practice1/net.pt"
+
+max_iter: 300000
+iter_size: 2
+
+lr_policy: "step"
+base_lr: 0.001
+gamma: 0.3165
+stepsize: 60000
+
+type: "SGD"
+momentum: 0.9
+weight_decay: 0.0002
+solver_mode: CPU
+
+display: 20
+snapshot: 20000
+snapshot_prefix: "caffe-materials/practice1/net_train"
