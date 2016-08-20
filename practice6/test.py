@@ -83,7 +83,7 @@ def visualize(filename, Bx, data, scale):
 
 if __name__ == '__main__':
   from caffe import Net, TRAIN
-  net = Net('caffe-materials/practice6/net.pt', 'caffe-materials/practice6/net_trained.cm', TRAIN)
+  net = Net('caffe-materials/practice6/net-test.pt', 'caffe-materials/practice6/net_trained.cm', TRAIN)
   for count in range(100):
     net.forward()
     Bx, score = reconstruct(net.blobs['bbox'].data, net.blobs['obj_score'].data, net.blobs['label'].data)
