@@ -55,16 +55,23 @@ def distance(pi, pj, By):
 def process(X, BY):
   batch_size, h, w, _ = X.shape
   num_p = h * w
+
+  # Generate 2d grid
   ri = np.array(range(h)) + 0.5
   rj = np.array(range(w)) + 0.5
   pj, pi = np.meshgrid(rj, ri)
   pj = pj.reshape(-1)
   pi = pi.reshape(-1)
+
+  # Predicted margin for each (i,j) at the grid
   X = X.reshape(batch_size, num_p, 4)
+  # Regression target for each (i,j) (to be computed)
   Y = np.zeros((batch_size, num_p, 5),
                dtype=np.float32)
+  # True objectness score for each predicted box
   obj_score = np.zeros((batch_size, num_p),
                        dtype=np.float32)
+  # True object class for regression target
   gt_class = np.zeros((batch_size, num_p),
                       dtype=np.float32)
   for n, x in enumerate(X):
